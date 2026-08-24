@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Mesh Node Connectors -->
+    <path
+        android:pathData="M54,30 L32,66 M54,30 L76,66 M32,66 L76,66 M54,30 L54,54 M32,66 L54,54 M76,66 L54,54"
+        android:strokeWidth="2.5"
+        android:strokeColor="#FFFFD600"
+        android:strokeLineCap="round" />
+    
+    <!-- Radio Waves Emitting from Central Gateway -->
+    <path
+        android:pathData="M42,22 A16,16 0 0,1 66,22"
+        android:strokeWidth="2"
+        android:strokeColor="#FFFF3B30"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+    <path
+        android:pathData="M35,16 A25,25 0 0,1 73,16"
+        android:strokeWidth="2.5"
+        android:strokeColor="#FFFF3B30"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+    
+    <!-- Peripheral Mesh Nodes (Yellow) -->
+    <path
+        android:pathData="M32,66 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0"
+        android:fillColor="#FFFFD600" />
+    <path
+        android:pathData="M76,66 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0"
+        android:fillColor="#FFFFD600" />
+    <path
+        android:pathData="M54,54 m -4,0 a 4,4 0 1,0 8,0 a 4,4 0 1,0 -8,0"
+        android:fillColor="#FFFFFFFF" />
+
+    <!-- Central Gateway Node (Red with Core) -->
+    <path
+        android:pathData="M54,30 m -7,0 a 7,7 0 1,0 14,0 a 7,7 0 1,0 -14,0"
+        android:fillColor="#FFFF3B30" />
+    <path
+        android:pathData="M54,30 m -3,0 a 3,3 0 1,0 6,0 a 3,3 0 1,0 -6,0"
+        android:fillColor="#FFFFFFFF" />
+        
+    <!-- Bottom Radio Beacon Line -->
+    <path
+        android:pathData="M24,80 L84,80"
+        android:strokeWidth="2"
+        android:strokeColor="#66FF3B30"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M36,86 L72,86"
+        android:strokeWidth="2"
+        android:strokeColor="#44FFD600"
+        android:strokeLineCap="round" />
+</vector>

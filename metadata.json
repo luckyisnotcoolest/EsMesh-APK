@@ -1,0 +1,6 @@
+{
+  "name": "EsMesh",
+  "description": "Technical mesh communication controller and device manager for ESP32 EsMesh nodes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
