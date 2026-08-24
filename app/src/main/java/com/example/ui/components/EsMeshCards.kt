@@ -15,12 +15,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeviceHub
 import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.Podcasts
 import androidx.compose.material.icons.filled.Router
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -96,6 +98,7 @@ fun TechnicalDeviceCard(
     isConnected: Boolean,
     onConnectClick: () -> Unit,
     onDetailsClick: () -> Unit,
+    onRemoveClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -112,13 +115,13 @@ fun TechnicalDeviceCard(
             .padding(16.dp)
     ) {
         Column {
-            // Header Row: Name, Model, and Status LED
+            // Header Row: Name, Model, and Status LED / Delete button
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f, fill = false)) {
                     Box(
                         modifier = Modifier
                             .size(32.dp)
@@ -149,7 +152,24 @@ fun TechnicalDeviceCard(
                         )
                     }
                 }
-                StatusLedIndicator(status = device.connectionStatus, showLabel = false)
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    StatusLedIndicator(status = device.connectionStatus, showLabel = false)
+                    if (onRemoveClick != null) {
+                        Spacer(modifier = Modifier.width(4.dp))
+                        IconButton(
+                            onClick = onRemoveClick,
+                            modifier = Modifier.size(28.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Remove Node",
+                                tint = EsMeshTextMuted,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(12.dp))

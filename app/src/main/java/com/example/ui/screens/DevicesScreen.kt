@@ -224,7 +224,8 @@ fun DevicesScreen(
                     onConnectClick = {
                         if (isConnected) viewModel.disconnect() else viewModel.connectDevice(device)
                     },
-                    onDetailsClick = { onNavigateToDetails(device) }
+                    onDetailsClick = { onNavigateToDetails(device) },
+                    onRemoveClick = { viewModel.removeDevice(device.id) }
                 )
             }
 

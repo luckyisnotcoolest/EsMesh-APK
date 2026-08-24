@@ -151,40 +151,53 @@ fun NetworkScreen(
                             accentColor = EsMeshYellow
                         )
 
-                        Text(text = "↕ (Wi-Fi / WebSocket)", color = EsMeshTextMuted, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
+                        if (uiState.isConnected && topo.gatewayNodeId.isNotBlank()) {
+                            Text(text = "↕ (Wi-Fi / WebSocket)", color = EsMeshTextMuted, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
 
-                        // Gateway Node
-                        TopologyNodeItem(
-                            icon = Icons.Default.Router,
-                            title = "ESP32 Gateway (${topo.gatewayNodeId})",
-                            subtitle = "IP: ${topo.gatewayIp} • SSID: ${topo.routerSsid}",
-                            accentColor = EsMeshRed
-                        )
+                            // Gateway Node
+                            TopologyNodeItem(
+                                icon = Icons.Default.Router,
+                                title = "ESP32 Gateway (${topo.gatewayNodeId})",
+                                subtitle = "IP: ${topo.gatewayIp} • SSID: ${topo.routerSsid}",
+                                accentColor = EsMeshRed
+                            )
 
-                        Text(text = "↕ (EsMesh RF / 2.4GHz)", color = EsMeshTextMuted, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
+                            val childNodes = topo.nodes.filter { it.nodeId != topo.gatewayNodeId }
+                            if (childNodes.isNotEmpty()) {
+                                Text(text = "↕ (EsMesh RF / 2.4GHz)", color = EsMeshTextMuted, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
 
-                        // Mesh Nodes
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            topo.nodes.filter { it.nodeId != topo.gatewayNodeId }.forEach { node ->
-                                Box(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(8.dp))
-                                        .background(Color(0xFF161622))
-                                        .border(1.dp, EsMeshBorder, RoundedCornerShape(8.dp))
-                                        .padding(10.dp),
-                                    contentAlignment = Alignment.Center
+                                // Mesh Nodes
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceEvenly
                                 ) {
-                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                        Icon(Icons.Default.Sensors, contentDescription = null, tint = EsMeshYellow, modifier = Modifier.size(20.dp))
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Text(text = node.nodeId, color = EsMeshTextPrimary, fontSize = 12.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace)
-                                        Text(text = "${node.hops} hop", color = EsMeshTextMuted, fontSize = 10.sp, fontFamily = FontFamily.Monospace)
+                                    childNodes.forEach { node ->
+                                        Box(
+                                            modifier = Modifier
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .background(Color(0xFF161622))
+                                                .border(1.dp, EsMeshBorder, RoundedCornerShape(8.dp))
+                                                .padding(10.dp),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                                Icon(Icons.Default.Sensors, contentDescription = null, tint = EsMeshYellow, modifier = Modifier.size(20.dp))
+                                                Spacer(modifier = Modifier.height(4.dp))
+                                                Text(text = node.nodeId, color = EsMeshTextPrimary, fontSize = 12.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace)
+                                                Text(text = "${node.hops} hop", color = EsMeshTextMuted, fontSize = 10.sp, fontFamily = FontFamily.Monospace)
+                                            }
+                                        }
                                     }
                                 }
                             }
+                        } else {
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Text(
+                                text = "No active ESP32 Gateway connected to query mesh topology.",
+                                color = EsMeshTextSecondary,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontFamily = FontFamily.Monospace
+                            )
                         }
                     }
                 }
@@ -201,6 +214,27 @@ fun NetworkScreen(
                 )
             }
 
+            if (topo.nodes.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(EsMeshCharcoalCard)
+                            .border(1.dp, EsMeshBorder, RoundedCornerShape(8.dp))
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "NO ACTIVE MESH NODES REPORTED",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = EsMeshTextMuted,
+                            fontFamily = FontFamily.Monospace
+                        )
+                    }
+                }
+            }
+
             items(topo.nodes, key = { it.nodeId }) { node ->
                 MeshNodeDetailCard(node = node)
             }
@@ -215,6 +249,27 @@ fun NetworkScreen(
                     letterSpacing = 1.sp,
                     modifier = Modifier.padding(top = 8.dp)
                 )
+            }
+
+            if (topo.routes.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(EsMeshCharcoalCard)
+                            .border(1.dp, EsMeshBorder, RoundedCornerShape(8.dp))
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "NO ROUTING ENTRIES",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = EsMeshTextMuted,
+                            fontFamily = FontFamily.Monospace
+                        )
+                    }
+                }
             }
 
             items(topo.routes) { route ->
