@@ -62,6 +62,23 @@ The merged output `.bin` files will be automatically generated and placed in `fi
 
 ---
 
+## 💻 Arduino IDE Standalone Sketches
+
+If you prefer using the **Arduino IDE** instead of PlatformIO, standalone sketches with board-specific setups are available in `firmware/sketches/`:
+
+- **ESP32-S3**: `firmware/sketches/EsMesh_ESP32S3/EsMesh_ESP32S3.ino`
+- **ESP32 Classic / WROOM**: `firmware/sketches/EsMesh_ESP32/EsMesh_ESP32.ino`
+- **ESP32-C3**: `firmware/sketches/EsMesh_ESP32C3/EsMesh_ESP32C3.ino`
+- **ESP32-C6**: `firmware/sketches/EsMesh_ESP32C6/EsMesh_ESP32C6.ino`
+
+#### Arduino IDE Libraries Required:
+- `painlessMesh`
+- `ArduinoJson` (v6.x)
+- `ESPAsyncWebServer`
+- `AsyncTCP`
+
+---
+
 ## ⚡ Flashing to ESP32
 
 ### Option 1: Directly via Android Phone (EsMesh-APK)

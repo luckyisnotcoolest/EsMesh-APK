@@ -16,6 +16,7 @@ jobs:
     name: Build Merged Firmware for ${{ matrix.target }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - target: esp32s3_node
@@ -39,12 +40,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
 
       - name: Install PlatformIO & esptool
         run: |
           python -m pip install --upgrade pip
-          pip install platformio esptool
+          pip install -r firmware/requirements.txt
 
       - name: Build and Merge Firmware (${{ matrix.name }})
         working-directory: ./firmware
